@@ -1,0 +1,32 @@
+#!/bin/bash
+#SBATCH --mem=120G
+#SBATCH --nodes=1
+#SBATCH --ntasks=16
+#SBATCH --partition=wsu_gen_gpu.q
+#SBATCH --gres=gpu:1
+
+
+#SBATCH -J 1EEZ.dipol # Job Name
+#SBATCH -o dipp_outpu.%j # Output file name (%j expands to jobID)
+#SBATCH -e dipp_info.%j # Error file name (%j expands to jobid)
+#SBATCH -t 72:00:00 # Run time (hh:mm:ss) - 1.5 hours; do 48 h as default
+
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=mheikes.chem@gmail.com
+
+# make sure we have the module loaded:
+module load GROMACS
+module list
+
+# timestamps are helpful
+echo "job started on $(date)"
+
+# now run Gaussian:
+
+bash dipole_calc.sh
+
+
+echo "job finished on $(date)"
+
+
+
